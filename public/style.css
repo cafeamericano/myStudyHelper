@@ -10,6 +10,11 @@ body, html {
 }
 
 i {
-    color: rgb(129, 73, 54);
-    border: 2px rgb(129, 73, 54) solid
+    color: rgb(158, 88, 65);
+    border: 2px rgb(158, 88, 65) solid
+}
+
+.btn-primary {
+    border: none;
+    background-color: rgb(158, 88, 65);
 }
