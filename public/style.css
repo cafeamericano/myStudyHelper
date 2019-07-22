@@ -8,3 +8,8 @@ body {
 body, html {
     height: 100%;
 }
+
+i {
+    color: rgb(129, 73, 54);
+    border: 2px rgb(129, 73, 54) solid
+}
