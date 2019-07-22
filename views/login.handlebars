@@ -1,0 +1,31 @@
+<!--This is rendered from a Handlebars template-->
+
+<div class='container-fluid' style="height: 100%; display: flex; justify-content: center; align-items: center">
+    <!-- Login Box -->
+    <div class='card'
+        style='width: 350px; padding: 40px; margin: auto; background: rgba(255, 255, 255, 0.8); border-radius: 40px'>
+        <form id='loginForm'>
+            <div class='form-group'>
+                <div style="position: relative">
+                    <h1 style="width: 100%; text-align: center; font-family: 'Permanent Marker', cursive;">Study
+                        Helper</h1>
+                    <br>
+                    <!-- <img src='splash.png' width="100%"> -->
+                </div>
+                <label for="inputEmail">Email address</label>
+                <input id='inputEmail' class="form-control" type="email" placeholder='Email'>
+                <br>
+                <label for="inputPassword">Password</label>
+                <input id='inputPassword' class="form-control" type='password' placeholder="Password">
+            </div>
+            <br>
+            <button id='loginButton' type='submit' class='btn btn-primary' style='width: 100%'>Login</button>
+            <div style='margin-top: 20px; text-align: center'>
+                Don't have an account? Just enter your desired credentials above and click <span id='signUpButton'
+                    class='bronze' style='cursor: pointer'>here</span> to register.
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src='login.js'></script>

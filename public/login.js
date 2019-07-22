@@ -23,11 +23,11 @@ firebase.initializeApp(firebaseConfig);
 //Realtime listener
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
-        console.log(firebaseUser)
-        window.location.replace("home.html");
+        console.log(firebaseUser);
+        window.location.replace("/home");
     } else {
         console.log('not logged in')
-    }
+    };
 })
 
 //#######################################################################################
@@ -61,7 +61,6 @@ $(document).on('submit', '#loginForm', function () {
             M.toast({ html: 'The email provided is not a valid email address.' })
         } else if (error.message === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
             M.toast({ html: 'The entered email address is incorrect.' })
-
         } else if (error.message === 'The password is invalid or the user does not have a password.') {
             M.toast({ html: 'The entered password is incorrect.' })
         }

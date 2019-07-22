@@ -6,6 +6,8 @@ var axios = require('axios')
 var dbkeys = require('./dbkeys')
 var firebase = require("firebase/app");
 var moment = require('moment')
+var handlebars = require('express-handlebars')
+var path = require('path') //Needed for Handlebars
 require("firebase/auth");
 
 //DEFINE DB================================================================
@@ -32,13 +34,20 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-//MIDDLEWARE================================================================
+//EXPRESS PUBLIC FOLDER================================================================
 
 app.use(express.static(__dirname + '/public'));
+
+//BODY PARSER MIDDLEWARE================================================================
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+//HANDLEBARS================================================================
+
+app.set('views', path.join(__dirname, 'views'));
+app.engine('handlebars', handlebars({ defaultLayout: 'standard' }))
+app.set('view engine', 'handlebars');
 
 //CONNECT TO DB================================================================
 
@@ -50,12 +59,16 @@ connection.connect(function (err) {
 
     //Force redirection to login route
     app.get('/', function (req, res) {
-        res.sendFile('/index.html')
+        res.render('login')
+    });
+
+    //Take user to their home page
+    app.get('/home', function (req, res) {
+        res.render('home')
     });
 
     //Grab all entries in the table and return as JSON
     app.get('/allentries/:user', function (req, res) {
-        console.log(req.params.user)
         var sql = `SELECT * FROM entriespool WHERE user_id='${req.params.user}' ORDER BY date DESC;`
         connection.query(sql, function (err, result) {
             if (err) {
@@ -78,7 +91,7 @@ connection.connect(function (err) {
         console.log(sql)
         connection.query(sql, function (err, result) {
         })
-        res.redirect('back');
+        res.render('home')
     });
 
     //Process entry deletion request
@@ -87,7 +100,7 @@ connection.connect(function (err) {
         console.log(sql)
         connection.query(sql, function (err) {
             if (err) throw err;
-            res.redirect('back')
+            res.render('home')
         });
     });
 
@@ -95,6 +108,6 @@ connection.connect(function (err) {
 
 });
 
-app.listen(5000, function () {
-    console.log('Server listening on Port 5000...')
+app.listen(5500, function () {
+    console.log('Server listening on Port 5500...')
 })

@@ -28,7 +28,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         pullEntries(firebaseUser.uid)
     } else {
         console.log('Logged out.')
-        window.location.replace("index.html");
+        window.location.replace("/");
     }
 })
 
@@ -38,7 +38,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 //Log out
 logoutButton.addEventListener('click', e => {
     firebase.auth().signOut()
-    window.location.replace("../index.html");
+    headToLoginPage()
 })
 //#######################################################################################
 //###############################               #########################################
@@ -93,8 +93,4 @@ function pullEntries(userID) {
         $('#useridForNewEntry').val(userID)
 
     });
-}
-
-function deleteEntry(recordIDinDatabase) {
-
 }
