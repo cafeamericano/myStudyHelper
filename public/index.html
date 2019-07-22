@@ -26,20 +26,22 @@
 
     <link rel='stylesheet' href='style.css'>
 
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Barriecito|Exo+2|Londrina+Shadow|Permanent+Marker|Poiret+One&display=swap" rel="stylesheet">
+
 </head>
 
-<body class='container-fluid'>
-
-    <!-- Header -->
-    <div class="row">
-        <p ID='creatorsBanner' style='text-align: center; margin-top: 20px; text-align: center; width: 100%'>CREATED BY MATTHEW FARMER</p>
-    </div>
+<body class='container-fluid' style="display: flex; justify-content: center; align-items: center">
 
     <!-- Login Box -->
-    <div class='card' style='width: 350px; padding: 40px; margin: auto'>
+    <div class='card' style='width: 350px; padding: 40px; margin: auto; background: rgba(255, 255, 255, 0.8); border-radius: 40px'>
         <form id='loginForm'>
             <div class='form-group'>
-                <h1 style='text-align: center'>Study.</h1>
+                <div style="position: relative">
+                    <h1 style="width: 100%; text-align: center; font-family: 'Permanent Marker', cursive;">Study Helper</h1>
+                    <br>
+                    <!-- <img src='splash.png' width="100%"> -->
+                </div>
                 <label for="inputEmail">Email address</label>
                 <input id='inputEmail' class="form-control" type="email" placeholder='Email'>
                 <br>

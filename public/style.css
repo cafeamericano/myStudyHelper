@@ -1,6 +1,10 @@
 body {
-    background-image: url('background.jpg');
+    background-image: url('pushpins.jpg');
     background-size: cover;
     background-repeat: repeat;
     background-attachment: fixed;
+}
+
+body, html {
+    height: 100%;
 }

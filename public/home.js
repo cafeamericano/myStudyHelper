@@ -52,7 +52,7 @@ $.ajax({
 }).then(function (response) {
     console.log(response)
     for (var i = 0; i < response.length; i++) {
-        let card = $(`<div class='card m-2'></div>`)
+        let card = $(`<div class='card m-3'></div>`)
 
         let cardHeader = $(`<div class='card-header'></div>`)
         cardHeader.append(`<h5>${response[i].date}</h5>`)
