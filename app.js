@@ -5,6 +5,7 @@ var app = express()
 var axios = require('axios')
 var dbkeys = require('./dbkeys')
 var firebase = require("firebase/app");
+var moment = require('moment')
 require("firebase/auth");
 
 //DEFINE DB================================================================
@@ -75,11 +76,11 @@ connection.connect(function (err) {
     //Add an entry for the logged in user
     app.post('/addentry', function (req, res) {
         let timestamp = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-        var sql = `INSERT INTO entriespool (user_id, timestamp, date, hours, comments, proglang, subtech) VALUES ("${cookiedEmail}", "${timestamp}", "${req.body.date}", "${req.body.hours}", "${req.body.comments}", "${req.body.proglang}", "${req.body.subtech}");`
+        var sql = `INSERT INTO entriespool (user_id, timestamp, date, hours, comments, proglang, subtech) VALUES ("${req.body.userid}", "${timestamp}", "${req.body.date}", "${req.body.hours}", "${req.body.comments}", "${req.body.proglang}", "${req.body.subtech}");`
         console.log(sql)
         connection.query(sql, function (err, result) {
         })
-        res.redirect('/')
+        res.redirect('back');
     });
 
     //START SERVER================================================================
