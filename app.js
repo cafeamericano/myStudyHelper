@@ -48,8 +48,6 @@ connection.connect(function (err) {
 
     //ROUTES================================================================
 
-    //Login routes__________________________________________________________________________________________________
-
     //Force redirection to login route
     app.get('/', function (req, res) {
         res.sendFile('/index.html')

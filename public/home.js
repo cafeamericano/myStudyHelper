@@ -61,8 +61,11 @@ function pullEntries(userID) {
             let card = $(`<div class='card m-3'></div>`)
     
             let cardHeader = $(`<div class='card-header'></div>`)
-            cardHeader.append(`<h5>${response[i].date}</h5>`)
-    
+            let cardHeaderRow = $(`<div class='row'></div>`)
+            cardHeaderRow.append(`<div class='col-8'><h5>${response[i].date}</h5></div>`)
+            cardHeaderRow.append(`<div class='col-4 text-right'><i id=${response[i].id} class="material-icons" style='font-size: 20px; border-radius: 100%'>clear</i></div>`)
+            cardHeader.append(cardHeaderRow)
+
             let cardBody = $(`<div class='card-body'></div>`)
             let cardText = $(`<div class='card-text'></div>`)
             cardText.append(`<p>${response[i].comments}</p>`)
@@ -77,34 +80,8 @@ function pullEntries(userID) {
 
         //Prepare for a new entry if necessary
         $('#useridForNewEntry').val(userID)
-        
+
     });
 }
 
-function postEntry(userID) {
-    let queryURL = `/allentries/${userID}`
-    console.log(queryURL)
-    $.ajax({
-        url: queryURL,
-        method: "GET",
-    }).then(function (response) {
-        console.log(response)
-        for (var i = 0; i < response.length; i++) {
-            let card = $(`<div class='card m-3'></div>`)
-    
-            let cardHeader = $(`<div class='card-header'></div>`)
-            cardHeader.append(`<h5>${response[i].date}</h5>`)
-    
-            let cardBody = $(`<div class='card-body'></div>`)
-            let cardText = $(`<div class='card-text'></div>`)
-            cardText.append(`<p>${response[i].comments}</p>`)
-            cardText.append(`<p>Hours studied: ${response[i].hours}</p>`)
-            cardBody.append(cardText)
-    
-            card.append(cardHeader)
-            card.append(cardBody)
-    
-            $('main').append(card)
-        }
-    });
-}
+function deleteEntry()
