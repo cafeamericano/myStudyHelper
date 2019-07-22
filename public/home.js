@@ -25,6 +25,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
         console.log(firebaseUser)
         $('#loggedInUserDisplay').text(firebaseUser.email)
+        pullEntries(firebaseUser.uid)
     } else {
         console.log('Logged out.')
         window.location.replace("index.html");
@@ -46,27 +47,30 @@ logoutButton.addEventListener('click', e => {
 //#######################################################################################
 
 //Pull in the entries from database, make cards
-$.ajax({
-    url: `/allentries`,
-    method: "GET",
-}).then(function (response) {
-    console.log(response)
-    for (var i = 0; i < response.length; i++) {
-        let card = $(`<div class='card m-3'></div>`)
-
-        let cardHeader = $(`<div class='card-header'></div>`)
-        cardHeader.append(`<h5>${response[i].date}</h5>`)
-
-        let cardBody = $(`<div class='card-body'></div>`)
-        let cardText = $(`<div class='card-text'></div>`)
-        cardText.append(`<p>${response[i].comments}</p>`)
-        cardText.append(`<p>Hours studied: ${response[i].hours}</p>`)
-        cardBody.append(cardText)
-
-        card.append(cardHeader)
-        card.append(cardBody)
-
-        $('main').append(card)
-    }
-});
-
+function pullEntries(userID) {
+    let queryURL = `/allentries/${userID}`
+    console.log(queryURL)
+    $.ajax({
+        url: queryURL,
+        method: "GET",
+    }).then(function (response) {
+        console.log(response)
+        for (var i = 0; i < response.length; i++) {
+            let card = $(`<div class='card m-3'></div>`)
+    
+            let cardHeader = $(`<div class='card-header'></div>`)
+            cardHeader.append(`<h5>${response[i].date}</h5>`)
+    
+            let cardBody = $(`<div class='card-body'></div>`)
+            let cardText = $(`<div class='card-text'></div>`)
+            cardText.append(`<p>${response[i].comments}</p>`)
+            cardText.append(`<p>Hours studied: ${response[i].hours}</p>`)
+            cardBody.append(cardText)
+    
+            card.append(cardHeader)
+            card.append(cardBody)
+    
+            $('main').append(card)
+        }
+    });
+}

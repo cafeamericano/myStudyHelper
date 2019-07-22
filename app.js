@@ -4,6 +4,8 @@ var bodyParser = require('body-parser')
 var app = express()
 var axios = require('axios')
 var dbkeys = require('./dbkeys')
+var firebase = require("firebase/app");
+require("firebase/auth");
 
 //DEFINE DB================================================================
 
@@ -15,12 +17,27 @@ var connection = mysql.createConnection({
     dateStrings: true
 });
 
+//FIREBASE SETUP================================================================
+
+var firebaseConfig = {
+    apiKey: "AIzaSyDMzmrdxKVN6eAuytoJkQjQXD5qC4PYVn4",
+    authDomain: "studyhelper-a8dad.firebaseapp.com",
+    databaseURL: "https://studyhelper-a8dad.firebaseio.com",
+    projectId: "studyhelper-a8dad",
+    storageBucket: "",
+    messagingSenderId: "1075673230676",
+    appId: "1:1075673230676:web:68dbf90b086a22d4"
+};
+
+firebase.initializeApp(firebaseConfig);
+
 //MIDDLEWARE================================================================
 
 app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 
 //CONNECT TO DB================================================================
 
@@ -38,15 +55,20 @@ connection.connect(function (err) {
     });
 
     //Grab all entries in the table and return as JSON
-    app.get('/allentries', function (req, res) {
-        var sql = "SELECT * FROM entriespool ORDER BY date DESC;"
+    app.get('/allentries/:user', function (req, res) {
+        console.log(req.params.user)
+        var sql = `SELECT * FROM entriespool WHERE user_id='${req.params.user}' ORDER BY date DESC;`
         connection.query(sql, function (err, result) {
-            let items = [];
-            for (i = 0; i < result.length; i++) {
-                items.push(result[i])
+            if (err) {
+                console.log(err)
+            } else {
+                let items = [];
+
+                for (i = 0; i < result.length; i++) {
+                    items.push(result[i])
+                }
+                res.send(items)
             }
-            console.log(items)
-            res.send(items)
         })
     });
 
