@@ -39,7 +39,7 @@ connection.connect(function (err) {
 
     //Grab all entries in the table and return as JSON
     app.get('/allentries', function (req, res) {
-        var sql = "SELECT * FROM entriespool;"
+        var sql = "SELECT * FROM entriespool ORDER BY date DESC;"
         connection.query(sql, function (err, result) {
             let items = [];
             for (i = 0; i < result.length; i++) {

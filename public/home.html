@@ -28,10 +28,25 @@
 
 </head>
 
-<body class='container-fluid'>
-    <div id='logoutButton'><a class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>Log Out</a>
+<body class='container-fluid' style="position: relative">
+
+    <!-- Default dropleft button -->
+    <div class="btn-group dropleft" style='position: fixed; top: 20px; right: 20px; z-index: 999; cursor: pointer'>
+        <div data-toggle="dropdown">
+            <i class="material-icons" style='font-size: 40px; border: 2px black solid; border-radius: 100%'>person</i>
+        </div>
+        <div class="dropdown-menu p-3">
+            <p id='loggedInUserDisplay' style='font-weight: 600'>Username</p>
+            <a id='logoutButton'> Logout </a>
+        </div>
     </div>
+
+    <div class="jumbotron">
+        <h1 class="display-4">Your entries.</h1>
+    </div>
+
     <main class='container'></main>
+
 
     <script src="https://www.gstatic.com/firebasejs/6.2.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.2/firebase-auth.js"></script>

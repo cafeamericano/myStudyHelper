@@ -32,19 +32,24 @@
 
     <!-- Header -->
     <div class="row">
-        <p ID='creatorsBanner' style='text-align: center; margin-top: 20px'>CREATED BY MATTHEW FARMER</p>
-        <h1 style='font-size: 110px; font-weight: 600; text-align: center; margin-top: 80px'>Study.</h1>
+        <p ID='creatorsBanner' style='text-align: center; margin-top: 20px; text-align: center; width: 100%'>CREATED BY MATTHEW FARMER</p>
     </div>
 
     <!-- Login Box -->
     <div class='card' style='width: 350px; padding: 40px; margin: auto'>
         <form id='loginForm'>
-            <input id='inputEmail' type="email" placeholder='Email'>
-            <input id='inputPassword' type='password' placeholder="Password">
-            <br><br>
-            <button id='loginButton' type='submit' class='btn btn-action' style='width: 100%'>Login</button>
+            <div class='form-group'>
+                <h1 style='text-align: center'>Study.</h1>
+                <label for="inputEmail">Email address</label>
+                <input id='inputEmail' class="form-control" type="email" placeholder='Email'>
+                <br>
+                <label for="inputPassword">Password</label>
+                <input id='inputPassword' class="form-control" type='password' placeholder="Password">
+            </div>
+            <br>
+            <button id='loginButton' type='submit' class='btn btn-primary' style='width: 100%'>Login</button>
             <div style='margin-top: 20px; text-align: center'>Don't have an account? Just enter your desired credentials
-                above and click <a id='signUpButton' style='cursor: pointer'>here</a> to register.</div>
+                above and click <a id='signUpButton' style='cursor: pointer; color: blue'>here</a> to register.</div>
         </form>
     </div>
 
