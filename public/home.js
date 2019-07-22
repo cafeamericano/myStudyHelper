@@ -59,11 +59,22 @@ function pullEntries(userID) {
         //Draw the cards
         for (var i = 0; i < response.length; i++) {
             let card = $(`<div class='card m-3'></div>`)
-    
+
             let cardHeader = $(`<div class='card-header'></div>`)
             let cardHeaderRow = $(`<div class='row'></div>`)
             cardHeaderRow.append(`<div class='col-8'><h5>${response[i].date}</h5></div>`)
-            cardHeaderRow.append(`<div class='col-4 text-right'><i id=${response[i].id} class="material-icons" style='font-size: 20px; border-radius: 100%'>clear</i></div>`)
+
+            //The delete button
+            cardHeaderRow.append(`
+                <div class='col-4 text-right'>
+                    <form action="/deleteentry" method="post">
+                        <input readonly style="display: none" type="text" id=${response[i].id} name='ID' value=${response[i].id}>
+                        <button type="submit" class="btn text-warning">
+                            <i class="material-icons" style='font-size: 20px; border-radius: 100%'>clear</i>
+                        </button>
+                    </form>
+                </div>
+            `);
             cardHeader.append(cardHeaderRow)
 
             let cardBody = $(`<div class='card-body'></div>`)
@@ -71,10 +82,10 @@ function pullEntries(userID) {
             cardText.append(`<p>${response[i].comments}</p>`)
             cardText.append(`<p>Hours studied: ${response[i].hours}</p>`)
             cardBody.append(cardText)
-    
+
             card.append(cardHeader)
             card.append(cardBody)
-    
+
             $('main').append(card)
         };
 
@@ -84,4 +95,6 @@ function pullEntries(userID) {
     });
 }
 
-function deleteEntry()
+function deleteEntry(recordIDinDatabase) {
+
+}

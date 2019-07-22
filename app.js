@@ -81,6 +81,16 @@ connection.connect(function (err) {
         res.redirect('back');
     });
 
+    //Process entry deletion request
+    app.post('/deleteentry', function (req, res) {
+        var sql = `DELETE FROM entriespool WHERE ID = '${req.body.ID}';`
+        console.log(sql)
+        connection.query(sql, function (err) {
+            if (err) throw err;
+            res.redirect('back')
+        });
+    });
+
     //START SERVER================================================================
 
 });
