@@ -7,6 +7,7 @@ body {
 
 body, html {
     height: 100%;
+    font-family: 'Roboto', sans-serif;
 }
 
 i {
@@ -21,6 +22,19 @@ i {
 
 .bronze {
     color: rgb(158, 88, 65);
+}
+
+.card {
+    font-family: 'Roboto', sans-serif;
+}
+
+.card-header {
+    color: rgb(158, 88, 65);
+    font-size: 18px;
+}
+
+.card-header h5{
+    padding-top: 10px
 }
 
 .powerSource {
