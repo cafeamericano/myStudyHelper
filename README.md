@@ -4,7 +4,7 @@
 ## About
 Study Helper is an application designed to allow programming students to keep track of their study habits. Users begin by creating an account. Entries for study sessions may then be added or deleted. Users have the option to indicate the programming language studied for the session being logged.
 
-## Begin a Game
+## Demonstration
 
 ![demo](studyHelper.gif)
 
