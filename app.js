@@ -2,7 +2,6 @@ var express = require('express')
 var mysql = require('mysql')
 var bodyParser = require('body-parser')
 var app = express()
-var axios = require('axios')
 var dbkeys = require('./dbkeys')
 var firebase = require("firebase/app");
 var moment = require('moment')
@@ -91,7 +90,7 @@ connection.connect(function (err) {
         console.log(sql)
         connection.query(sql, function (err, result) {
         })
-        res.render('home')
+        res.redirect('/home')
     });
 
     //Process entry deletion request
@@ -100,7 +99,7 @@ connection.connect(function (err) {
         console.log(sql)
         connection.query(sql, function (err) {
             if (err) throw err;
-            res.render('home')
+            res.redirect('/home')
         });
     });
 

@@ -81,6 +81,7 @@ function pullEntries(userID) {
             let cardText = $(`<div class='card-text'></div>`)
             cardText.append(`<p>${response[i].comments}</p>`)
             cardText.append(`<p>Hours studied: ${response[i].hours}</p>`)
+            cardText.append(`<p>Programming language: ${response[i].proglang}</p>`)
             cardBody.append(cardText)
 
             card.append(cardHeader)
