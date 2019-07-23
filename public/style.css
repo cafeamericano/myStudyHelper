@@ -22,3 +22,19 @@ i {
 .bronze {
     color: rgb(158, 88, 65);
 }
+
+.powerSource {
+    font-family: 'Roboto', sans-serif;
+    text-align: right;
+    font-size: 24px;
+    line-height: 2;
+    color: rgb(158, 88, 65);
+}
+
+.powerSourceHeader {
+    font-family: 'Roboto', sans-serif;
+    text-align: right;
+    font-size: 12px;
+    line-height: 2;
+    color: rgb(158, 88, 65);
+}
