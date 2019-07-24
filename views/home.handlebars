@@ -15,19 +15,24 @@
 
     <!--New entry button-->
     <div class="btn-group dropleft" style='position: fixed; top: 80px; right: 20px; z-index: 999; cursor: pointer'
-        data-toggle="modal" data-target="#exampleModalCenter">
+        data-toggle="modal" data-target="#addModal">
         <i class="material-icons" style='font-size: 40px; border-radius: 100%'>add</i>
+    </div>
+
+    <!--Stats page button-->
+    <div id='statsModalTrigger' class="btn-group dropleft" style='position: fixed; top: 140px; right: 20px; z-index: 999; cursor: pointer'
+        data-toggle="modal" data-target="#statsModal">
+        <i class="material-icons" style='font-size: 40px; border-radius: 100%'>show_chart</i>
     </div>
 
     <main class='container'></main>
 
-    <!-- Add Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- Add Modal //////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Create an Entry</h5>
+                    <h5 class="modal-title" id="addModalTitle">Create an Entry</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -76,14 +81,14 @@
         </div>
 
     </div>
+    <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
-    <!-- Edit Modal -->
-    <div class="modal fade" id="editRecordModal" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- Edit Modal //////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <div class="modal fade" id="editRecordModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Edit an Entry</h5>
+                    <h5 class="modal-title" id="editModalTitle">Edit an Entry</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -94,18 +99,20 @@
                     <form action="/editentry" method="post">
 
                         <div class="form-group" style="display: none">
-                            <input type="text" class="form-control" id="recordDatabaseID" name="recordDatabaseID"></input>
+                            <input type="text" class="form-control" id="recordDatabaseID"
+                                name="recordDatabaseID"></input>
                         </div>
 
                         <div class="form-group">
                             <label for="date">Date</label>
-                            <input type="date" class="form-control" id="dateEdit" name="dateEdit" placeholder="Date"></input>
+                            <input type="date" class="form-control" id="dateEdit" name="dateEdit"
+                                placeholder="Date"></input>
                         </div>
 
                         <div class="form-group">
                             <label for="hours">Hours</label>
-                            <input type="number" step="0.25" min="0" class="form-control" id="hoursEdit" name="hoursEdit"
-                                placeholder="Hours"></input>
+                            <input type="number" step="0.25" min="0" class="form-control" id="hoursEdit"
+                                name="hoursEdit" placeholder="Hours"></input>
                         </div>
 
                         <div class="form-group">
@@ -128,8 +135,24 @@
                 </div>
             </div>
         </div>
-
     </div>
+    <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+    <!-- Stats Modal //////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <div class="modal fade" id="statsModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="statsModalTitle">Statistics</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="statsModalBody" class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+    <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
 </div>
 

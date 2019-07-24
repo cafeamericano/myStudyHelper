@@ -26,6 +26,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         console.log(firebaseUser)
         $('#loggedInUserDisplay').text(firebaseUser.email)
         pullEntries(firebaseUser.uid)
+        fillStatsModalBody(firebaseUser.uid)
     } else {
         console.log('Logged out.')
         window.location.replace("/");
@@ -46,6 +47,7 @@ $(document).on('click', '#edit_button', function () {
     console.log(dbID)
     prepareRecordForEdit(dbID)
 })
+
 //#######################################################################################
 //###############################               #########################################
 //############################### PAGE SPECIFIC #########################################
@@ -70,10 +72,7 @@ function pullEntries(userID) {
             let cardHeaderRow = $(`<div class='row'></div>`)
             cardHeaderRow.append(`<div class='col-6'><h5>${response[i].date}</h5></div>`)
 
-
-            //The edit button
-
-            //The delete button
+            //The edit and delete buttons
             cardHeaderRow.append(`
                 <div class='col-6 text-right'> 
                 <i id='edit_button' data-dbID="${response[i].id}" data-toggle="modal" data-target="#editRecordModal" class="material-icons ml-2" style='font-size: 20px; border-radius: 100%; cursor: pointer'>edit</i>                   
@@ -119,6 +118,22 @@ function prepareRecordForEdit(dbID) {
         $('#hoursEdit').val(response[0].hours)
         $('#commentsEdit').val(response[0].comments)
         $('#proglangEdit').val(response[0].proglang)
+    });
+}
+
+function fillStatsModalBody(userID) {
+    let queryURL = `/allentries/${userID}`
+    console.log(queryURL)
+    $.ajax({
+        url: queryURL,
+        method: "GET",
+    }).then(function (response) {
+        console.log(response)
+        let sum = 0;
+        for (var i = 0; i < response.length; i++) {
+            sum += response[i].hours
+        };
+        $('#statsModalBody').append(`<p>You have studied for a total of ${sum} hours.</p>`)
     });
 }
 
