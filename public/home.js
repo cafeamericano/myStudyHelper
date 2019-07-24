@@ -27,6 +27,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         $('#loggedInUserDisplay').text(firebaseUser.email)
         pullEntries(firebaseUser.uid)
         fillStatsModalBody(firebaseUser.uid)
+        makeLineChart(firebaseUser.uid)
     } else {
         console.log('Logged out.')
         window.location.replace("/");
@@ -137,3 +138,53 @@ function fillStatsModalBody(userID) {
     });
 }
 
+
+function makeLineChart(userID) {
+
+    //Make the API call
+    let queryURL = `/allentries/${userID}`
+    console.log(queryURL)
+    $.ajax({
+        url: queryURL,
+        method: "GET",
+    }).then(function (response) {
+        let hours = []
+        let dates = []
+        for (i = 0; i < response.length; i ++) {
+            hours.push(response[i].hours)
+            dates.push(response[i].date)
+        };
+        console.log('hours')
+        console.log(hours)
+        console.log('dates')
+        console.log(hours)
+
+        //Prepare the modal for new data
+        $('#statsModalBody').append(`<canvas id="myChart"></canvas>`)
+
+        //Create the new chart
+        var ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Share Value',
+                    data: hours,
+                    backgroundColor: [
+                        'rgba(13, 193, 175, 0.5)'
+                    ],
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    })
+};
