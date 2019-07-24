@@ -121,6 +121,16 @@ connection.connect(function (err) {
         });
     });
 
+    //Process entry edit request
+    app.post('/editentry', function (req, res) {
+        var sql = `UPDATE entriespool SET date = "${req.body.dateEdit}", hours = "${req.body.hoursEdit}", comments = "${req.body.commentsEdit}", proglang = "${req.body.proglangEdit}" where ID = "${req.body.recordDatabaseID}";`
+        console.log(sql)
+        connection.query(sql, function (err) {
+            if (err) throw err;
+            res.redirect('/home')
+        });
+    });
+
     //START SERVER================================================================
 
 });

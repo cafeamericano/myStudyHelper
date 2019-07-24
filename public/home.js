@@ -76,7 +76,7 @@ function pullEntries(userID) {
             //The delete button
             cardHeaderRow.append(`
                 <div class='col-6 text-right'> 
-                <i id='edit_button' data-dbID="${response[i].id}" data-toggle="modal" data-target="#editRecordModal" class="material-icons ml-2" style='font-size: 20px; border-radius: 100%'>edit</i>                   
+                <i id='edit_button' data-dbID="${response[i].id}" data-toggle="modal" data-target="#editRecordModal" class="material-icons ml-2" style='font-size: 20px; border-radius: 100%; cursor: pointer'>edit</i>                   
                     <form action="/deleteentry" method="post" style='display: inline'>
                         <input readonly style="display: none" type="text" id=${response[i].id} name='ID' value=${response[i].id}>
                         <button type="submit" class="btn text-warning">
@@ -114,9 +114,11 @@ function prepareRecordForEdit(dbID) {
         method: "GET",
     }).then(function (response) {
         console.log(response)
+        $('#recordDatabaseID').val(response[0].id)
         $('#dateEdit').val(response[0].date)
         $('#hoursEdit').val(response[0].hours)
         $('#commentsEdit').val(response[0].comments)
         $('#proglangEdit').val(response[0].proglang)
     });
 }
+
