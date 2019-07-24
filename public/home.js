@@ -20,15 +20,17 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+//Contain active user
+let activeUser = ''
+
 //Realtime listener for authentication
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
         console.log(firebaseUser)
         $('#loggedInUserDisplay').text(firebaseUser.email)
+        activeUser = firebaseUser.uid
         pullEntries(firebaseUser.uid)
-        //fillStatsModalBody(firebaseUser.uid)
-        //makeLineChart(firebaseUser.uid)
-        makePieChart(firebaseUser.uid)
+        makeLineChart(firebaseUser.uid) //Have this ready to show upon clicking of stats page
     } else {
         console.log('Logged out.')
         window.location.replace("/");
@@ -50,6 +52,20 @@ $(document).on('click', '#edit_button', function () {
     prepareRecordForEdit(dbID)
 })
 
+$(document).on('click', '#hoursByTime', function () {
+    $('#statsModalBody').empty()
+    makeLineChart(activeUser)
+})
+
+$(document).on('click', '#hoursByLanguage', function () {
+    $('#statsModalBody').empty()
+    makePieChart(activeUser)
+})
+
+$(document).on('click', '#hoursByTotal', function () {
+    $('#statsModalBody').empty()
+    determineTotalHoursStudied(activeUser)
+})
 //#######################################################################################
 //###############################               #########################################
 //############################### PAGE SPECIFIC #########################################
@@ -123,7 +139,7 @@ function prepareRecordForEdit(dbID) {
     });
 }
 
-function fillStatsModalBody(userID) {
+function determineTotalHoursStudied(userID) {
     let queryURL = `/allentries/${userID}`
     console.log(queryURL)
     $.ajax({
@@ -135,7 +151,7 @@ function fillStatsModalBody(userID) {
         for (var i = 0; i < response.length; i++) {
             sum += response[i].hours
         };
-        $('#statsModalBody').append(`<p>You have studied for a total of ${sum} hours.</p>`)
+        $('#statsModalBody').append(`<p class='text-center'>You have studied for a total of ${sum} hours.</p>`)
     });
 }
 

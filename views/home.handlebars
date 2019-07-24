@@ -149,7 +149,18 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div id="statsModalBody" class="modal-body"></div>
+                <div class="modal-body" style="position: relative">
+                    {{!-- <div id="totalHoursIndicator" style="position: absolute; top: 10px; left: 10px">Hello</div> --}}
+                    <!--Stats Modal Navbar-->
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li id='hoursByTime' class="page-item"><a class="page-link" href="#">Hours by Time</a></li>
+                            <li id='hoursByLanguage' class="page-item"><a class="page-link" href="#">Hours by Language</a></li>
+                            <li id='hoursByTotal' class="page-item"><a class="page-link" href="#">Total</a></li>
+                        </ul>
+                    </nav>
+                    <div id="statsModalBody"></div>
+                </div>
             </div>
         </div>
     </div>
