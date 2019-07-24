@@ -4,11 +4,21 @@
 ## About
 Study Helper is an application designed to allow programming students to keep track of their study habits. Users begin by creating an account. Entries for study sessions may then be added or deleted. Users have the option to indicate the programming language studied for the session being logged.
 
+## Screenshots
+![login](/screenshots/login.png)
+![home](/screenshots/home.png)
+![addEntry](/screenshots/addEntry.png)
+![deleteEntry](/screenshots/deleteEntry.png)
+![hoursByTime](/screenshots/hoursByTime.png)
+![hoursByLanguage](/screenshots/hoursByLanguage.png)
+![hoursByTotal](/screenshots/hoursByTotal.png)
+
 ## Demonstration
 
 ![demo](studyHelper.gif)
 
 The GIF above demonstrates usage of the app. Upon logging in, a user is presented with a chronologically ordered (descending) list of entries that have been made. The user has the ability to delete any entries that have been made. To create a new entry, the user may click on the '+' icon at the top-right of the screen. A modal will appear to collect information relevant to the entry.
+
 
 ## Technologies Used
 
