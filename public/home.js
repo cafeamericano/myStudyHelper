@@ -26,8 +26,9 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         console.log(firebaseUser)
         $('#loggedInUserDisplay').text(firebaseUser.email)
         pullEntries(firebaseUser.uid)
-        fillStatsModalBody(firebaseUser.uid)
-        makeLineChart(firebaseUser.uid)
+        //fillStatsModalBody(firebaseUser.uid)
+        //makeLineChart(firebaseUser.uid)
+        makePieChart(firebaseUser.uid)
     } else {
         console.log('Logged out.')
         window.location.replace("/");
@@ -150,7 +151,7 @@ function makeLineChart(userID) {
     }).then(function (response) {
         let hours = []
         let dates = []
-        for (i = 0; i < response.length; i ++) {
+        for (i = 0; i < response.length; i++) {
             hours.push(response[i].hours)
             dates.push(response[i].date)
         };
@@ -169,7 +170,7 @@ function makeLineChart(userID) {
             data: {
                 labels: dates,
                 datasets: [{
-                    label: 'Hours Studied',
+                    label: 'Hours',
                     data: hours,
                     backgroundColor: [
                         'rgba(158, 88, 65, 0.5)'
@@ -186,5 +187,64 @@ function makeLineChart(userID) {
                 }
             }
         });
+    })
+};
+
+function makePieChart(userID) {
+
+    //Make the API call
+    let queryURL = `/allentries/${userID}`
+    console.log(queryURL)
+    $.ajax({
+        url: queryURL,
+        method: "GET",
+    }).then(function (response) {
+
+        //Find the unique languages
+        let languages = []
+        let hours = []
+        for (i = 0; i < response.length; i++) {
+            languages.push(response[i].proglang)
+            hours.push(response[i].hours)
+        };
+        let protoUniqueLanguages = new Set(languages)
+        let uniqueLanguages = Array.from(protoUniqueLanguages)
+        console.log(uniqueLanguages)
+
+        //Gather totals for each unique language
+        let hourSums = []
+        for (i = 0; i < uniqueLanguages.length; i++) {
+            let thisLanguageTotal = 0;
+            for (j = 0; j < response.length; j++) {
+                if (response[j].proglang === uniqueLanguages[i]) {
+                    thisLanguageTotal += response[j].hours
+                }
+            };
+            hourSums.push(thisLanguageTotal)
+        };
+
+        //Prepare the modal for new data
+        $('#statsModalBody').append(`<canvas id="myChart"></canvas>`)
+
+        //Create the new chart
+        var ctx = document.getElementById('myChart').getContext('2d');
+        data = {
+            datasets: [{
+                data: hourSums,
+                backgroundColor: ["rgb(158, 88, 65)", "rgb(194, 123, 100)", "rgb(207, 156, 138)", "rgb(158, 88, 65)", "rgb(194, 123, 100)", "rgb(207, 156, 138)", "rgb(158, 88, 65)", "rgb(194, 123, 100)", "rgb(207, 156, 138)"]
+            }],
+
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: uniqueLanguages
+        };
+        options = {
+        }
+        var myDoughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: data,
+            options: options
+        });
+
+
     })
 };
