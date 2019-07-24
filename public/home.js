@@ -52,6 +52,12 @@ $(document).on('click', '#edit_button', function () {
     prepareRecordForEdit(dbID)
 })
 
+$(document).on('click', '#delete_button', function () {
+    let dbID = $(this).attr('data-dbID')
+    deleteRecordFromDatabase(dbID)
+    $(this).parent().parent().parent().parent().fadeOut()
+})
+
 $(document).on('click', '#hoursByTime', function () {
     $('#statsModalBody').empty()
     makeLineChart(activeUser)
@@ -71,6 +77,20 @@ $(document).on('click', '#hoursByTotal', function () {
 //############################### PAGE SPECIFIC #########################################
 //###############################               #########################################
 //#######################################################################################
+
+function deleteRecordFromDatabase(dbID) {
+    let queryURL = `/deleteentry`
+    console.log(queryURL)
+    $.ajax({
+        url: queryURL,
+        method: "POST",
+        data: {
+            ID: dbID
+        }
+    }).then(function (response) {
+        console.log('Deleted record')
+    })
+}
 
 //Pull in the entries from database, make cards
 function pullEntries(userID) {
@@ -93,13 +113,8 @@ function pullEntries(userID) {
             //The edit and delete buttons
             cardHeaderRow.append(`
                 <div class='col-6 text-right'> 
-                <i id='edit_button' data-dbID="${response[i].id}" data-toggle="modal" data-target="#editRecordModal" class="material-icons ml-2" style='font-size: 20px; border-radius: 100%; cursor: pointer'>edit</i>                   
-                    <form action="/deleteentry" method="post" style='display: inline'>
-                        <input readonly style="display: none" type="text" id=${response[i].id} name='ID' value=${response[i].id}>
-                        <button type="submit" class="btn text-warning">
-                            <i class="material-icons ml-2" style='font-size: 20px; border-radius: 100%'>clear</i>
-                        </button>
-                    </form>
+                    <i id='edit_button' data-dbID="${response[i].id}" data-toggle="modal" data-target="#editRecordModal" class="material-icons ml-2" style='font-size: 20px; border-radius: 100%; cursor: pointer'>edit</i>                   
+                    <i id='delete_button' data-dbID="${response[i].id}" class="material-icons ml-2" style='font-size: 20px; border-radius: 100%; cursor: pointer'>clear</i>
                 </div>
             `);
             cardHeader.append(cardHeaderRow)
@@ -140,6 +155,9 @@ function prepareRecordForEdit(dbID) {
 }
 
 function determineTotalHoursStudied(userID) {
+    $('#hoursByTime').removeClass('active')
+    $('#hoursByLanguage').removeClass('active')
+    $('#hoursByTotal').addClass('active')
     let queryURL = `/allentries/${userID}`
     console.log(queryURL)
     $.ajax({
@@ -157,7 +175,9 @@ function determineTotalHoursStudied(userID) {
 
 
 function makeLineChart(userID) {
-
+    $('#hoursByLanguage').removeClass('active')
+    $('#hoursByTotal').removeClass('active')
+    $('#hoursByTime').addClass('active')
     //Make the API call
     let queryURL = `/allentries/${userID}`
     console.log(queryURL)
@@ -168,8 +188,10 @@ function makeLineChart(userID) {
         let hours = []
         let dates = []
         for (i = 0; i < response.length; i++) {
-            hours.push(response[i].hours)
-            dates.push(response[i].date)
+            if (response[i].hours <= 12) { //Limit graphed items to single-day sessions
+                hours.push(response[i].hours)
+                dates.push(response[i].date)
+            }
         };
         console.log('hours')
         console.log(hours)
@@ -207,7 +229,9 @@ function makeLineChart(userID) {
 };
 
 function makePieChart(userID) {
-
+    $('#hoursByTime').removeClass('active')
+    $('#hoursByTotal').removeClass('active')
+    $('#hoursByLanguage').addClass('active')
     //Make the API call
     let queryURL = `/allentries/${userID}`
     console.log(queryURL)
