@@ -169,10 +169,10 @@ function makeLineChart(userID) {
             data: {
                 labels: dates,
                 datasets: [{
-                    label: 'Share Value',
+                    label: 'Hours Studied',
                     data: hours,
                     backgroundColor: [
-                        'rgba(13, 193, 175, 0.5)'
+                        'rgba(158, 88, 65, 0.5)'
                     ],
                 }]
             },
