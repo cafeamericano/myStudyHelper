@@ -21,7 +21,7 @@
 
     <main class='container'></main>
 
-    <!-- Modal -->
+    <!-- Add Modal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -76,6 +76,63 @@
         </div>
 
     </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editRecordModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Edit an Entry</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form Content -->
+
+                    <form action="/editentry" method="post">
+
+                        <div class="form-group" style="display: none">
+                            <label for="userid">User ID</label>
+                            <input type="text" class="form-control" id="useridForEditEntry" name="userid"
+                                placeholder="userid"></input>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" class="form-control" id="dateEdit" name="date" placeholder="Date"></input>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hours">Hours</label>
+                            <input type="number" step="0.25" min="0" class="form-control" id="hoursEdit" name="hours"
+                                placeholder="Hours"></input>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comments">Comments</label>
+                            <textarea class="form-control" rows="5" id="commentsEdit" name="comments"
+                                placeholder="Comments"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hours">Programming Language</label>
+                            <input type="text" class="form-control" id="proglangEdit" name="proglang"
+                                placeholder="Programming language"></input>
+                        </div>
+                        <div class='text-right'>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </div>
 
 <script src='home.js'></script>

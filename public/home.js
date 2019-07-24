@@ -40,6 +40,12 @@ logoutButton.addEventListener('click', e => {
     firebase.auth().signOut()
     headToLoginPage()
 })
+
+$(document).on('click', '#edit_button', function () {
+    let dbID = $(this).attr('data-dbID')
+    console.log(dbID)
+    prepareRecordForEdit(dbID)
+})
 //#######################################################################################
 //###############################               #########################################
 //############################### PAGE SPECIFIC #########################################
@@ -62,15 +68,19 @@ function pullEntries(userID) {
 
             let cardHeader = $(`<div class='card-header'></div>`)
             let cardHeaderRow = $(`<div class='row'></div>`)
-            cardHeaderRow.append(`<div class='col-8'><h5>${response[i].date}</h5></div>`)
+            cardHeaderRow.append(`<div class='col-6'><h5>${response[i].date}</h5></div>`)
+
+
+            //The edit button
 
             //The delete button
             cardHeaderRow.append(`
-                <div class='col-4 text-right'>
-                    <form action="/deleteentry" method="post">
+                <div class='col-6 text-right'> 
+                <i id='edit_button' data-dbID="${response[i].id}" data-toggle="modal" data-target="#editRecordModal" class="material-icons ml-2" style='font-size: 20px; border-radius: 100%'>edit</i>                   
+                    <form action="/deleteentry" method="post" style='display: inline'>
                         <input readonly style="display: none" type="text" id=${response[i].id} name='ID' value=${response[i].id}>
                         <button type="submit" class="btn text-warning">
-                            <i class="material-icons" style='font-size: 20px; border-radius: 100%'>clear</i>
+                            <i class="material-icons ml-2" style='font-size: 20px; border-radius: 100%'>clear</i>
                         </button>
                     </form>
                 </div>
@@ -93,5 +103,20 @@ function pullEntries(userID) {
         //Prepare for a new entry if necessary
         $('#useridForNewEntry').val(userID)
 
+    });
+}
+
+function prepareRecordForEdit(dbID) {
+    let queryURL = `/entryByID/${dbID}`
+    console.log(queryURL)
+    $.ajax({
+        url: queryURL,
+        method: "GET",
+    }).then(function (response) {
+        console.log(response)
+        $('#dateEdit').val(response[0].date)
+        $('#hoursEdit').val(response[0].hours)
+        $('#commentsEdit').val(response[0].comments)
+        $('#proglangEdit').val(response[0].proglang)
     });
 }

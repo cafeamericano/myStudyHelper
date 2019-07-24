@@ -83,6 +83,24 @@ connection.connect(function (err) {
         })
     });
 
+    //Grab all entries in the table and return as JSON
+    app.get('/entryByID/:id', function (req, res) {
+        var sql = `SELECT * FROM entriespool WHERE id='${req.params.id}';`
+        console.log(sql)
+        connection.query(sql, function (err, result) {
+            if (err) {
+                console.log(err)
+            } else {
+                let items = [];
+                console.log(result)
+                for (i = 0; i < result.length; i++) {
+                    items.push(result[i])
+                }
+                res.send(items)
+            }
+        })
+    });
+
     //Add an entry for the logged in user
     app.post('/addentry', function (req, res) {
         let timestamp = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
