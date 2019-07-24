@@ -220,8 +220,10 @@ function makePieChart(userID) {
         let languages = []
         let hours = []
         for (i = 0; i < response.length; i++) {
-            languages.push(response[i].proglang)
-            hours.push(response[i].hours)
+            if (response[i].proglang !== '') {
+                languages.push(response[i].proglang)
+                hours.push(response[i].hours)
+            }
         };
         let protoUniqueLanguages = new Set(languages)
         let uniqueLanguages = Array.from(protoUniqueLanguages)
