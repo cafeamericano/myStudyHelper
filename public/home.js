@@ -273,7 +273,7 @@ function makePieChart(userID) {
         data = {
             datasets: [{
                 data: hourSums,
-                backgroundColor: ["rgb(158, 88, 65)", "rgb(194, 123, 100)", "rgb(207, 156, 138)", "rgb(158, 88, 65)", "rgb(194, 123, 100)", "rgb(207, 156, 138)", "rgb(158, 88, 65)", "rgb(194, 123, 100)", "rgb(207, 156, 138)"]
+                backgroundColor: ["rgb(207, 156, 138)", "rgb(237, 153, 147)", "rgb(158, 88, 65)", "rgb(227, 224, 197)", "rgb(194, 123, 100)", "rgb(207, 156, 138)", "rgb(237, 153, 147)", "rgb(158, 88, 65)", "rgb(227, 224, 197)", "rgb(194, 123, 100)"]
             }],
 
             // These labels appear in the legend and in the tooltips when hovering different arcs
