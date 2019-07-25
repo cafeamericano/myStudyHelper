@@ -2,6 +2,8 @@
 
 <div class='container' style="position: relative">
 
+    <!-- Navigation Buttons //////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
     <!-- Profile Button -->
     <div class="btn-group dropleft" style='position: fixed; top: 20px; right: 20px; z-index: 999; cursor: pointer'>
         <div data-toggle="dropdown">
@@ -168,8 +170,6 @@
                     </button>
                 </div>
                 <div class="modal-body" style="position: relative">
-                    {{!-- <div id="totalHoursIndicator" style="position: absolute; top: 10px; left: 10px">Hello</div> --}}
-                    <!--Stats Modal Navbar-->
                     <nav class="nav nav-pills nav-justified">
                         <a id='hoursByTime' class="nav-item nav-link" href="#">Hours by Time</a>
                         <a id='hoursByLanguage' class="nav-item nav-link" href="#">Hours by Language</a>
@@ -187,8 +187,3 @@
 
 <script src='home.js'></script>
 
-<script>
-    $('#myModal').on('shown.bs.modal', function () {
-        $('#myInput').trigger('focus')
-    })
-</script>

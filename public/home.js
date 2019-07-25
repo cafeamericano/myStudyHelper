@@ -1,11 +1,4 @@
-//#######################################################################################
-//###############################               #########################################
-//###############################    GLOBAL     #########################################
-//###############################               #########################################
-//#######################################################################################
-
 //FIREBASE SETUP#########################################################################
-//#######################################################################################
 
 var firebaseConfig = {
     apiKey: "AIzaSyDMzmrdxKVN6eAuytoJkQjQXD5qC4PYVn4",
@@ -28,8 +21,8 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
         console.log(firebaseUser)
         $('#loggedInUserDisplay').text(firebaseUser.email)
-        activeUser = firebaseUser.uid
-        pullEntries(firebaseUser.uid)
+        activeUser = firebaseUser.uid //Grab this value for later use
+        pullEntries(firebaseUser.uid) //Pull up user's entries when page loads
         makeLineChart(firebaseUser.uid) //Have this ready to show upon clicking of stats page
     } else {
         console.log('Logged out.')
@@ -38,59 +31,46 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 })
 
 //EVENT LISTENERS########################################################################
-//#######################################################################################
 
-//Log out
+//Log out button clicked
 logoutButton.addEventListener('click', e => {
     firebase.auth().signOut()
-    headToLoginPage()
 })
 
+//Edit record button clicked
 $(document).on('click', '#edit_button', function () {
     let dbID = $(this).attr('data-dbID')
     console.log(dbID)
     prepareRecordForEdit(dbID)
 })
 
+//Delete record button clicked
 $(document).on('click', '#delete_button', function () {
     let dbID = $(this).attr('data-dbID')
     deleteRecordFromDatabase(dbID)
     $(this).parent().parent().parent().parent().fadeOut()
 })
 
+//Hours by time tab clicked
 $(document).on('click', '#hoursByTime', function () {
     $('#statsModalBody').empty()
     makeLineChart(activeUser)
 })
 
+//Hours by language tab clicked
 $(document).on('click', '#hoursByLanguage', function () {
     $('#statsModalBody').empty()
     makePieChart(activeUser)
 })
 
+//Hours by total tab clicked
 $(document).on('click', '#hoursByTotal', function () {
     $('#statsModalBody').empty()
     determineTotalHoursStudied(activeUser)
 })
-//#######################################################################################
-//###############################               #########################################
-//############################### PAGE SPECIFIC #########################################
-//###############################               #########################################
-//#######################################################################################
 
-function deleteRecordFromDatabase(dbID) {
-    let queryURL = `/deleteentry`
-    console.log(queryURL)
-    $.ajax({
-        url: queryURL,
-        method: "POST",
-        data: {
-            ID: dbID
-        }
-    }).then(function (response) {
-        console.log('Deleted record')
-    })
-}
+//FUNCTIONS#########################################################################
+
 
 //Pull in the entries from database, make cards
 function pullEntries(userID) {
@@ -138,6 +118,7 @@ function pullEntries(userID) {
     });
 }
 
+//Edit record preparation
 function prepareRecordForEdit(dbID) {
     let queryURL = `/entryByID/${dbID}`
     console.log(queryURL)
@@ -154,26 +135,22 @@ function prepareRecordForEdit(dbID) {
     });
 }
 
-function determineTotalHoursStudied(userID) {
-    $('#hoursByTime').removeClass('active')
-    $('#hoursByLanguage').removeClass('active')
-    $('#hoursByTotal').addClass('active')
-    let queryURL = `/allentries/${userID}`
+//Delete record perform
+function deleteRecordFromDatabase(dbID) {
+    let queryURL = `/deleteentry`
     console.log(queryURL)
     $.ajax({
         url: queryURL,
-        method: "GET",
+        method: "POST",
+        data: {
+            ID: dbID
+        }
     }).then(function (response) {
-        console.log(response)
-        let sum = 0;
-        for (var i = 0; i < response.length; i++) {
-            sum += response[i].hours
-        };
-        $('#statsModalBody').append(`<p class='text-center'>You have studied for a total of ${sum} hours.</p>`)
-    });
+        console.log('Deleted record')
+    })
 }
 
-
+//Line chart tab
 function makeLineChart(userID) {
     $('#hoursByLanguage').removeClass('active')
     $('#hoursByTotal').removeClass('active')
@@ -228,11 +205,11 @@ function makeLineChart(userID) {
     })
 };
 
+//Pie chart tab
 function makePieChart(userID) {
     $('#hoursByTime').removeClass('active')
     $('#hoursByTotal').removeClass('active')
     $('#hoursByLanguage').addClass('active')
-    //Make the API call
     let queryURL = `/allentries/${userID}`
     console.log(queryURL)
     $.ajax({
@@ -290,3 +267,23 @@ function makePieChart(userID) {
 
     })
 };
+
+//Total hours tab
+function determineTotalHoursStudied(userID) {
+    $('#hoursByTime').removeClass('active')
+    $('#hoursByLanguage').removeClass('active')
+    $('#hoursByTotal').addClass('active')
+    let queryURL = `/allentries/${userID}`
+    console.log(queryURL)
+    $.ajax({
+        url: queryURL,
+        method: "GET",
+    }).then(function (response) {
+        console.log(response)
+        let sum = 0;
+        for (var i = 0; i < response.length; i++) {
+            sum += response[i].hours
+        };
+        $('#statsModalBody').append(`<p class='text-center'>You have studied for a total of ${sum} hours.</p>`)
+    });
+}

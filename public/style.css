@@ -1,3 +1,5 @@
+/* General ############################################################ */
+
 body {
     background-image: url('pushpins.jpg');
     background-size: cover;
@@ -10,6 +12,8 @@ body, html {
     font-family: 'Roboto', sans-serif;
 }
 
+/* Icons and Buttons ############################################################ */
+
 i {
     color: rgb(158, 88, 65);
     border: 2px rgb(158, 88, 65) solid
@@ -20,22 +24,7 @@ i {
     background-color: rgb(158, 88, 65);
 }
 
-.bronze {
-    color: rgb(158, 88, 65);
-}
-
-.card {
-    font-family: 'Roboto', sans-serif;
-}
-
-.card-header {
-    color: rgb(158, 88, 65);
-    font-size: 18px;
-}
-
-.card-header h5{
-    padding-top: 10px
-}
+/* Login Page ############################################################ */
 
 .powerSource {
     font-family: 'Roboto', sans-serif;
@@ -50,5 +39,26 @@ i {
     text-align: right;
     font-size: 12px;
     line-height: 2;
+    color: rgb(158, 88, 65);
+}
+
+/* Home Page ############################################################ */
+
+.card {
+    font-family: 'Roboto', sans-serif;
+}
+
+.card-header {
+    color: rgb(158, 88, 65);
+    font-size: 18px;
+}
+
+.card-header h5{
+    padding-top: 10px
+}
+
+/* Custom Tags ############################################################ */
+
+.bronze {
     color: rgb(158, 88, 65);
 }

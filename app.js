@@ -1,3 +1,5 @@
+//REQUIREMENTS================================================================
+
 var express = require('express')
 var mysql = require('mysql')
 var bodyParser = require('body-parser')
@@ -9,7 +11,7 @@ var handlebars = require('express-handlebars')
 var path = require('path') //Needed for Handlebars
 require("firebase/auth");
 
-//DEFINE DB================================================================
+//DEFINE MYSQL DATABASE================================================================
 
 var connection = mysql.createConnection({
     host: dbkeys.Xhost,
@@ -131,9 +133,9 @@ connection.connect(function (err) {
         });
     });
 
-    //START SERVER================================================================
-
 });
+
+//START SERVER================================================================
 
 app.listen(5500, function () {
     console.log('Server listening on Port 5500...')
