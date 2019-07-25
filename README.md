@@ -2,9 +2,9 @@
 > Created by Matthew Farmer
 
 ## About
-Study Helper is an application designed to allow programming students to keep track of their study habits. Users begin by creating an account. Entries for study sessions may then be added or deleted. Users have the option to indicate the programming language studied for the session being logged.
+Study Helper is an application designed to allow programming students to keep track of their study habits. After creating an account, users may create/read/update/delete study session entries as well as view informative graphs and statistics relating to their study habits.
 
-## Screenshots
+## Walkthrough
 
 Login screen. Users have the ability to create a new account from here as well.
 ![login](/screenshots/login.png)
@@ -29,4 +29,4 @@ Statistics modal with an indication of the total number of hours spent studying.
 
 ## Technologies Used
 
-This application is built on NodeJS. It uses MySQL for its database and Express for routing. HandlebarsJS serves as the templating engine while Firebase provides user authentication.
+This application is built on NodeJS. It uses MySQL for its database and Express for routing. HandlebarsJS serves as the templating engine while Firebase provides user authentication. jQuery and AJAX calls are heavily used throughout the application, and graphs are provided by utilizing the ChartsJS API.
