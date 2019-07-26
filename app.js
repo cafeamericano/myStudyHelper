@@ -1,3 +1,7 @@
+//SERVER PORT NUMBER================================================================
+
+let port=process.env.PORT || 5500
+
 //REQUIREMENTS================================================================
 
 var express = require('express')
@@ -137,6 +141,6 @@ connection.connect(function (err) {
 
 //START SERVER================================================================
 
-app.listen(5500, function () {
-    console.log('Server listening on Port 5500...')
+app.listen(port, function () {
+    console.log(`Server listening on Port ${port}...`)
 })
