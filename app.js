@@ -78,32 +78,22 @@ VALUES
 //Create table
 client.query(createTableQuery, (err, res) => {
     if (err) throw err;
-    client.end();
 });
 
 //Add data
 client.query(sampleEntryQuery, (err, res) => {
     if (err) throw err;
-    client.end();
 });
 
 //Select data
 client.query(`SELECT * FROM entriespool`, (err, res) => {
     if (err) throw err;
-    client.end();
 });
 
 //ROUTES================================================================
 
 //Force redirection to login route
 app.get('/', function (req, res) {
-    client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
-        if (err) throw err;
-        for (let row of res.rows) {
-            console.log(JSON.stringify(row));
-        }
-        client.end();
-    });
     res.render('login')
 });
 
