@@ -40,6 +40,59 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', handlebars({ defaultLayout: 'standard' }))
 app.set('view engine', 'handlebars');
 
+//POSTGRES INITIAL PREPARATION================================================================
+
+let createTableQuery = `
+        CREATE TABLE IF NOT EXISTS
+        entriespool(
+          id SERIAL PRIMARY KEY,
+          user_id TEXT,
+          timestamp TIMESTAMP,
+          date DATE,
+          hours Integer,
+          comments TEXT,
+          category TEXT,
+          proglang TEXT,
+          subtech TEXT
+        )`;
+
+let sampleRecord = {
+    "user_id": "KY7oixFsV9cNaTy0HhHoB3CsdJz2",
+    "timestamp": null,
+    "date": "2019-06-22",
+    "hours": 100,
+    "comments": "From 6/1 to 6/22. 3 weeks at 10 hours each for class time. 3 weeks at 20 hours each for time outside of class, plus 10 additional hours for the beginning of Project 1.",
+    "category": null,
+    "proglang": "JavaScript",
+    "subtech": null
+}
+
+let sampleEntryQuery = `
+INSERT INTO entriespool (user_id, date, hours, comments, proglang)
+VALUES
+   ("KY7oixFsV9cNaTy0HhHoB3CsdJz2", "2019-06-22", "Sample record", "JavaScript");
+`
+
+//POSTGRES INITIAL QUERIES ================================================================
+
+//Create table
+client.query(createTableQuery, (err, res) => {
+    if (err) throw err;
+    client.end();
+});
+
+//Add data
+client.query(sampleEntryQuery, (err, res) => {
+    if (err) throw err;
+    client.end();
+});
+
+//Select data
+client.query(`SELECT * FROM entriespool`, (err, res) => {
+    if (err) throw err;
+    client.end();
+});
+
 //ROUTES================================================================
 
 //Force redirection to login route
