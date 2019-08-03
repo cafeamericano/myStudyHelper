@@ -67,27 +67,27 @@ let sampleRecord = {
     "subtech": null
 }
 
-let sampleEntryQuery = `
-INSERT INTO entriespool (user_id, date, hours, comments, proglang)
-VALUES
-   ("KY7oixFsV9cNaTy0HhHoB3CsdJz2", "2019-06-22", "Sample record", "JavaScript");
-`
+let sampleEntryQuery = `INSERT INTO entriespool (user_id, date, hours, comments, proglang) VALUES ('KY7oixFsV9cNaTy0HhHoB3CsdJz2', '2019-06-22', 3, 'samplerecord', 'JavaScript');`
+
 
 //POSTGRES INITIAL QUERIES ================================================================
 
 //Create table
 client.query(createTableQuery, (err, res) => {
     if (err) throw err;
+    //client.end();
 });
 
 //Add data
 client.query(sampleEntryQuery, (err, res) => {
     if (err) throw err;
+    //client.end();
 });
 
 //Select data
 client.query(`SELECT * FROM entriespool`, (err, res) => {
     if (err) throw err;
+    //client.end();
 });
 
 //ROUTES================================================================
