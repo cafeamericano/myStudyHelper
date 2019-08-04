@@ -128,7 +128,7 @@ function prepareRecordForEdit(dbID) {
     }).then(function (response) {
         console.log(response)
         $('#recordDatabaseID').val(response[0].id)
-        let formattedDate = moment(response[0].date).format('YYYY-MM-DD')
+        let formattedDate = moment(response[0].date).add(12, 'hours').format('YYYY-MM-DD') // Push from midnight to noon - incorrectly reports previous day at midnight
         console.log(formattedDate)
         $('#dateEdit').val(formattedDate)
         $('#hoursEdit').val(response[0].hours)
@@ -172,10 +172,6 @@ function makeLineChart(userID) {
                 dates.push(response[i].date)
             }
         };
-        console.log('hours')
-        console.log(hours)
-        console.log('dates')
-        console.log(hours)
 
         //Prepare the modal for new data
         $('#statsModalBody').append(`<canvas id="myChart"></canvas>`)
