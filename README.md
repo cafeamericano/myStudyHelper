@@ -29,4 +29,4 @@ Statistics modal with an indication of the total number of hours spent studying.
 
 ## Technologies Used
 
-This application is built on NodeJS. It uses MySQL for its database and Express for routing. HandlebarsJS serves as the templating engine while Firebase provides user authentication. jQuery and AJAX calls are heavily used throughout the application, and graphs are provided by utilizing the ChartsJS API.
+This application is built on NodeJS and hosted via Heroku. It uses PostgreSQL for its database and Express for routing. HandlebarsJS serves as the templating engine while Firebase provides user authentication. jQuery and AJAX calls are heavily used throughout the application, and graphs are provided by utilizing the ChartsJS API.
