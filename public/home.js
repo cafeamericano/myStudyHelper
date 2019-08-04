@@ -128,7 +128,7 @@ function prepareRecordForEdit(dbID) {
     }).then(function (response) {
         console.log(response)
         $('#recordDatabaseID').val(response[0].id)
-        let formattedDate = moment(response[0].date).format('MM/DD/YYYY')
+        let formattedDate = moment(response[0].date).format('YYYY-MM-DD')
         console.log(formattedDate)
         $('#dateEdit').val(formattedDate)
         $('#hoursEdit').val(response[0].hours)
