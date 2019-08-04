@@ -117,7 +117,6 @@ app.get('/entryByID/:id', function (req, res) {
             console.log(err)
         } else {
             let items = [];
-            console.log(result)
             for (let row of res.rows) {
                 items.push(row)
             }
