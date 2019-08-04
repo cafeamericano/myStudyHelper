@@ -99,8 +99,8 @@ app.get('/allentries/:user', function (req, res) {
         } else {
             console.log(res)
             let items = [];
-            for (i = 0; i < result.length; i++) {
-                items.push(result[i])
+            for (i = 0; i < res.length; i++) {
+                items.push(res[i])
             }
             console.log(items)
             res.send(items)
