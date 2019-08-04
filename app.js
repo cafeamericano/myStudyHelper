@@ -109,7 +109,7 @@ app.get('/allentries/:user', function (req, response) {
 });
 
 //Grab all entries in the table and return as JSON
-app.get('/entryByID/:id', function (req, res) {
+app.get('/entryByID/:id', function (req, response) {
     var sql = `SELECT * FROM entriespool WHERE id='${req.params.id}';`
     console.log(sql)
     client.query(sql, (err, res) => {
@@ -120,38 +120,38 @@ app.get('/entryByID/:id', function (req, res) {
             for (let row of res.rows) {
                 items.push(row)
             }
-            res.send(items)
+            response.send(items)
         }
     })
 });
 
 //Add an entry for the logged in user
-app.post('/addentry', function (req, res) {
+app.post('/addentry', function (req, response) {
     let timestamp = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
     var sql = `INSERT INTO entriespool (user_id, timestamp, date, hours, comments, proglang, subtech) VALUES ('${req.body.userid}', '${timestamp}', '${req.body.date}', '${req.body.hours}', '${req.body.comments}', '${req.body.proglang}', '${req.body.subtech}');`
     console.log(sql)
     client.query(sql, (err, res) => {
     })
-    res.redirect('/home')
+    response.redirect('/home')
 });
 
 //Process entry deletion request
-app.post('/deleteentry', function (req, res) {
+app.post('/deleteentry', function (req, response) {
     var sql = `DELETE FROM entriespool WHERE ID = '${req.body.ID}';`
     console.log(sql)
     client.query(sql, (err, res) => {
         if (err) throw err;
-        res.redirect('/home')
+        response.redirect('/home')
     });
 });
 
 //Process entry edit request
-app.post('/editentry', function (req, res) {
+app.post('/editentry', function (req, response) {
     var sql = `UPDATE entriespool SET date = '${req.body.dateEdit}', hours = '${req.body.hoursEdit}', comments = '${req.body.commentsEdit}', proglang = '${req.body.proglangEdit}' where ID = '${req.body.recordDatabaseID}';`
     console.log(sql)
     client.query(sql, (err, res) => {
         if (err) throw err;
-        res.redirect('/home')
+        response.redirect('/home')
     });
 });
 
