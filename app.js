@@ -93,15 +93,16 @@ app.get('/home', function (req, res) {
 //Grab all entries in the table and return as JSON
 app.get('/allentries/:user', function (req, res) {
     var sql = `SELECT * FROM entriespool WHERE user_id='${req.params.user}' ORDER BY date DESC;`
-    client.query(sql, function (err, result) {
+    client.query(sql, (err, res) => {
         if (err) {
             console.log(err)
         } else {
+            console.log(res)
             let items = [];
-
             for (i = 0; i < result.length; i++) {
                 items.push(result[i])
             }
+            console.log(items)
             res.send(items)
         }
     })
