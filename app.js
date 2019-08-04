@@ -91,7 +91,7 @@ app.get('/home', function (req, res) {
 });
 
 //Grab all entries in the table and return as JSON
-app.get('/allentries/:user', function (req, res) {
+app.get('/allentries/:user', function (req, response) {
     var sql = `SELECT * FROM entriespool WHERE user_id='${req.params.user}' ORDER BY date DESC;`
     client.query(sql, (err, res) => {
         if (err) {
@@ -99,11 +99,11 @@ app.get('/allentries/:user', function (req, res) {
         } else {
             console.log(res)
             let items = [];
-            for (i = 0; i < res.length; i++) {
-                items.push(res[i])
+            for (i = 0; i < result.length; i++) {
+                items.push(result[i])
             }
             console.log(items)
-            res.send(items)
+            response.send(items)
         }
     })
 });
