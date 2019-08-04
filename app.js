@@ -8,11 +8,11 @@ var express = require('express')
 var mysql = require('mysql')
 var bodyParser = require('body-parser')
 var app = express()
-var firebase = require("firebase/app");
+var firebase = require('firebase/app');
 var moment = require('moment')
 var handlebars = require('express-handlebars')
 var path = require('path') //Needed for Handlebars
-require("firebase/auth");
+require('firebase/auth');
 
 const { Client } = require('pg');
 
@@ -112,14 +112,14 @@ app.get('/allentries/:user', function (req, response) {
 app.get('/entryByID/:id', function (req, res) {
     var sql = `SELECT * FROM entriespool WHERE id='${req.params.id}';`
     console.log(sql)
-    client.query(sql, function (err, result) {
+    client.query(sql, (err, res) => {
         if (err) {
             console.log(err)
         } else {
             let items = [];
             console.log(result)
-            for (i = 0; i < result.length; i++) {
-                items.push(result[i])
+            for (let row of res.rows) {
+                items.push(row)
             }
             res.send(items)
         }
@@ -129,9 +129,9 @@ app.get('/entryByID/:id', function (req, res) {
 //Add an entry for the logged in user
 app.post('/addentry', function (req, res) {
     let timestamp = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-    var sql = `INSERT INTO entriespool (user_id, timestamp, date, hours, comments, proglang, subtech) VALUES ("${req.body.userid}", "${timestamp}", "${req.body.date}", "${req.body.hours}", "${req.body.comments}", "${req.body.proglang}", "${req.body.subtech}");`
+    var sql = `INSERT INTO entriespool (user_id, timestamp, date, hours, comments, proglang, subtech) VALUES ('${req.body.userid}', '${timestamp}', '${req.body.date}', '${req.body.hours}', '${req.body.comments}', '${req.body.proglang}', '${req.body.subtech}');`
     console.log(sql)
-    client.query(sql, function (err, result) {
+    client.query(sql, (err, res) => {
     })
     res.redirect('/home')
 });
@@ -140,7 +140,7 @@ app.post('/addentry', function (req, res) {
 app.post('/deleteentry', function (req, res) {
     var sql = `DELETE FROM entriespool WHERE ID = '${req.body.ID}';`
     console.log(sql)
-    client.query(sql, function (err) {
+    client.query(sql, (err, res) => {
         if (err) throw err;
         res.redirect('/home')
     });
@@ -148,9 +148,9 @@ app.post('/deleteentry', function (req, res) {
 
 //Process entry edit request
 app.post('/editentry', function (req, res) {
-    var sql = `UPDATE entriespool SET date = "${req.body.dateEdit}", hours = "${req.body.hoursEdit}", comments = "${req.body.commentsEdit}", proglang = "${req.body.proglangEdit}" where ID = "${req.body.recordDatabaseID}";`
+    var sql = `UPDATE entriespool SET date = '${req.body.dateEdit}', hours = '${req.body.hoursEdit}', comments = '${req.body.commentsEdit}', proglang = '${req.body.proglangEdit}' where ID = '${req.body.recordDatabaseID}';`
     console.log(sql)
-    client.query(sql, function (err) {
+    client.query(sql, (err, res) => {
         if (err) throw err;
         res.redirect('/home')
     });
