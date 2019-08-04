@@ -40,8 +40,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', handlebars({ defaultLayout: 'standard' }))
 app.set('view engine', 'handlebars');
 
-//POSTGRES INITIAL PREPARATION================================================================
+//POSTGRES INITIAL QUERIES ================================================================
 
+//Create table query definition
 let createTableQuery = `
         CREATE TABLE IF NOT EXISTS
         entriespool(
@@ -56,33 +57,20 @@ let createTableQuery = `
           subtech TEXT
         )`;
 
-let sampleRecord = {
-    "user_id": "KY7oixFsV9cNaTy0HhHoB3CsdJz2",
-    "timestamp": null,
-    "date": "2019-06-22",
-    "hours": 100,
-    "comments": "From 6/1 to 6/22. 3 weeks at 10 hours each for class time. 3 weeks at 20 hours each for time outside of class, plus 10 additional hours for the beginning of Project 1.",
-    "category": null,
-    "proglang": "JavaScript",
-    "subtech": null
-}
-
+//Sample query definition
 let sampleEntryQuery = `INSERT INTO entriespool (user_id, date, hours, comments, proglang) VALUES ('KY7oixFsV9cNaTy0HhHoB3CsdJz2', '2019-06-22', 3, 'samplerecord', 'JavaScript');`
 
+// //Create table
+// client.query(createTableQuery, (err, res) => {
+//     if (err) throw err;
+//     //client.end();
+// });
 
-//POSTGRES INITIAL QUERIES ================================================================
-
-//Create table
-client.query(createTableQuery, (err, res) => {
-    if (err) throw err;
-    //client.end();
-});
-
-//Add data
-client.query(sampleEntryQuery, (err, res) => {
-    if (err) throw err;
-    //client.end();
-});
+// //Add data
+// client.query(sampleEntryQuery, (err, res) => {
+//     if (err) throw err;
+//     //client.end();
+// });
 
 //Select data
 client.query(`SELECT * FROM entriespool`, (err, res) => {
@@ -102,70 +90,70 @@ app.get('/home', function (req, res) {
     res.render('home')
 });
 
-// //Grab all entries in the table and return as JSON
-// app.get('/allentries/:user', function (req, res) {
-//     var sql = `SELECT * FROM entriespool WHERE user_id='${req.params.user}' ORDER BY date DESC;`
-//     connection.query(sql, function (err, result) {
-//         if (err) {
-//             console.log(err)
-//         } else {
-//             let items = [];
+//Grab all entries in the table and return as JSON
+app.get('/allentries/:user', function (req, res) {
+    var sql = `SELECT * FROM entriespool WHERE user_id='${req.params.user}' ORDER BY date DESC;`
+    client.query(sql, function (err, result) {
+        if (err) {
+            console.log(err)
+        } else {
+            let items = [];
 
-//             for (i = 0; i < result.length; i++) {
-//                 items.push(result[i])
-//             }
-//             res.send(items)
-//         }
-//     })
-// });
+            for (i = 0; i < result.length; i++) {
+                items.push(result[i])
+            }
+            res.send(items)
+        }
+    })
+});
 
-// //Grab all entries in the table and return as JSON
-// app.get('/entryByID/:id', function (req, res) {
-//     var sql = `SELECT * FROM entriespool WHERE id='${req.params.id}';`
-//     console.log(sql)
-//     connection.query(sql, function (err, result) {
-//         if (err) {
-//             console.log(err)
-//         } else {
-//             let items = [];
-//             console.log(result)
-//             for (i = 0; i < result.length; i++) {
-//                 items.push(result[i])
-//             }
-//             res.send(items)
-//         }
-//     })
-// });
+//Grab all entries in the table and return as JSON
+app.get('/entryByID/:id', function (req, res) {
+    var sql = `SELECT * FROM entriespool WHERE id='${req.params.id}';`
+    console.log(sql)
+    client.query(sql, function (err, result) {
+        if (err) {
+            console.log(err)
+        } else {
+            let items = [];
+            console.log(result)
+            for (i = 0; i < result.length; i++) {
+                items.push(result[i])
+            }
+            res.send(items)
+        }
+    })
+});
 
-// //Add an entry for the logged in user
-// app.post('/addentry', function (req, res) {
-//     let timestamp = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-//     var sql = `INSERT INTO entriespool (user_id, timestamp, date, hours, comments, proglang, subtech) VALUES ("${req.body.userid}", "${timestamp}", "${req.body.date}", "${req.body.hours}", "${req.body.comments}", "${req.body.proglang}", "${req.body.subtech}");`
-//     console.log(sql)
-//     connection.query(sql, function (err, result) {
-//     })
-//     res.redirect('/home')
-// });
+//Add an entry for the logged in user
+app.post('/addentry', function (req, res) {
+    let timestamp = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+    var sql = `INSERT INTO entriespool (user_id, timestamp, date, hours, comments, proglang, subtech) VALUES ("${req.body.userid}", "${timestamp}", "${req.body.date}", "${req.body.hours}", "${req.body.comments}", "${req.body.proglang}", "${req.body.subtech}");`
+    console.log(sql)
+    client.query(sql, function (err, result) {
+    })
+    res.redirect('/home')
+});
 
-// //Process entry deletion request
-// app.post('/deleteentry', function (req, res) {
-//     var sql = `DELETE FROM entriespool WHERE ID = '${req.body.ID}';`
-//     console.log(sql)
-//     connection.query(sql, function (err) {
-//         if (err) throw err;
-//         res.redirect('/home')
-//     });
-// });
+//Process entry deletion request
+app.post('/deleteentry', function (req, res) {
+    var sql = `DELETE FROM entriespool WHERE ID = '${req.body.ID}';`
+    console.log(sql)
+    client.query(sql, function (err) {
+        if (err) throw err;
+        res.redirect('/home')
+    });
+});
 
-// //Process entry edit request
-// app.post('/editentry', function (req, res) {
-//     var sql = `UPDATE entriespool SET date = "${req.body.dateEdit}", hours = "${req.body.hoursEdit}", comments = "${req.body.commentsEdit}", proglang = "${req.body.proglangEdit}" where ID = "${req.body.recordDatabaseID}";`
-//     console.log(sql)
-//     connection.query(sql, function (err) {
-//         if (err) throw err;
-//         res.redirect('/home')
-//     });
-// });
+//Process entry edit request
+app.post('/editentry', function (req, res) {
+    var sql = `UPDATE entriespool SET date = "${req.body.dateEdit}", hours = "${req.body.hoursEdit}", comments = "${req.body.commentsEdit}", proglang = "${req.body.proglangEdit}" where ID = "${req.body.recordDatabaseID}";`
+    console.log(sql)
+    client.query(sql, function (err) {
+        if (err) throw err;
+        res.redirect('/home')
+    });
+});
 
 //START SERVER================================================================
 
