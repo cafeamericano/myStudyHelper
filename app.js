@@ -99,8 +99,8 @@ app.get('/allentries/:user', function (req, response) {
         } else {
             console.log(res)
             let items = [];
-            for (i = 0; i < res.length; i++) {
-                items.push(res[i])
+            for (let row of res.rows) {
+                items.push(row)
             }
             console.log(items)
             response.send(items)
@@ -118,8 +118,8 @@ app.get('/entryByID/:id', function (req, res) {
         } else {
             let items = [];
             console.log(result)
-            for (let row of res.rows) {
-                items.push(row)
+            for (i = 0; i < result.length; i++) {
+                items.push(result[i])
             }
             res.send(items)
         }
