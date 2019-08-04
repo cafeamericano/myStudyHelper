@@ -88,7 +88,7 @@ function pullEntries(userID) {
 
             let cardHeader = $(`<div class='card-header'></div>`)
             let cardHeaderRow = $(`<div class='row'></div>`)
-            cardHeaderRow.append(`<div class='col-6'><h5>${moment(response[i].date).format('MM/DD/YYYY')}</h5></div>`)
+            cardHeaderRow.append(`<div class='col-6'><h5>${moment(response[i].date).add(12, 'hours').format('MM/DD/YYYY')}</h5></div>`) // Push from midnight to noon - incorrectly reports previous day at midnight
 
             //The edit and delete buttons
             cardHeaderRow.append(`
