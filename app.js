@@ -5,7 +5,6 @@ let port = process.env.PORT || 5500
 //REQUIREMENTS================================================================
 
 var express = require('express')
-var mysql = require('mysql')
 var bodyParser = require('body-parser')
 var app = express()
 var firebase = require('firebase/app');
@@ -16,7 +15,7 @@ require('firebase/auth');
 
 const { Client } = require('pg');
 
-//DEFINE MYSQL DATABASE================================================================
+//DEFINE POSTGRES DATABASE================================================================
 
 const client = new Client({
     connectionString: process.env.DATABASE_URL,
@@ -58,7 +57,7 @@ let createTableQuery = `
         )`;
 
 //Sample query definition
-let sampleEntryQuery = `INSERT INTO entriespool (user_id, date, hours, comments, proglang) VALUES ('KY7oixFsV9cNaTy0HhHoB3CsdJz2', '2019-06-22', 3, 'samplerecord', 'JavaScript');`
+let sampleEntryQuery = `INSERT INTO entriespool (user_id, date, hours, comments, proglang) VALUES ('firebaseuseridgoeshere', '2019-06-22', 3, 'samplerecord', 'JavaScript');`
 
 // //Create table
 // client.query(createTableQuery, (err, res) => {
@@ -71,12 +70,6 @@ let sampleEntryQuery = `INSERT INTO entriespool (user_id, date, hours, comments,
 //     if (err) throw err;
 //     //client.end();
 // });
-
-//Select data
-client.query(`SELECT * FROM entriespool`, (err, res) => {
-    if (err) throw err;
-    //client.end();
-});
 
 //ROUTES================================================================
 

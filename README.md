@@ -1,8 +1,8 @@
-# **Study Helper**
+# **My Study Helper**
 > Created by Matthew Farmer
 
 ## About
-Study Helper is an application designed to allow programming students to keep track of their study habits. After creating an account, users may create/read/update/delete study session entries as well as view informative graphs and statistics relating to their study habits.
+My Study Helper is an application designed to allow programming students to keep track of their study habits. After creating an account, users may create/read/update/delete study session entries as well as view informative graphs and statistics relating to their study habits.
 
 ## Walkthrough
 
