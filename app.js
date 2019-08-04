@@ -42,22 +42,22 @@ app.set('view engine', 'handlebars');
 //POSTGRES INITIAL QUERIES ================================================================
 
 //Create table query definition
-let createTableQuery = `
-        CREATE TABLE IF NOT EXISTS
-        entriespool(
-          id SERIAL PRIMARY KEY,
-          user_id TEXT,
-          timestamp TIMESTAMP,
-          date DATE,
-          hours Integer,
-          comments TEXT,
-          category TEXT,
-          proglang TEXT,
-          subtech TEXT
-        )`;
+// let createTableQuery = `
+//         CREATE TABLE IF NOT EXISTS
+//         entriespool(
+//           id SERIAL PRIMARY KEY,
+//           user_id TEXT,
+//           timestamp TIMESTAMP,
+//           date DATE,
+//           hours Integer,
+//           comments TEXT,
+//           category TEXT,
+//           proglang TEXT,
+//           subtech TEXT
+//         )`;
 
-//Sample query definition
-let sampleEntryQuery = `INSERT INTO entriespool (user_id, date, hours, comments, proglang) VALUES ('firebaseuseridgoeshere', '2019-06-22', 3, 'samplerecord', 'JavaScript');`
+// //Sample query definition
+// let sampleEntryQuery = `INSERT INTO entriespool (user_id, date, hours, comments, proglang) VALUES ('firebaseuseridgoeshere', '2019-06-22', 3, 'samplerecord', 'JavaScript');`
 
 // //Create table
 // client.query(createTableQuery, (err, res) => {
@@ -121,7 +121,7 @@ app.get('/entryByID/:id', function (req, response) {
 //Add an entry for the logged in user
 app.post('/addentry', function (req, response) {
     let timestamp = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-    var sql = `INSERT INTO entriespool (user_id, timestamp, date, hours, comments, proglang, subtech) VALUES ('${req.body.userid}', '${timestamp}', '${req.body.date}', '${req.body.hours}', '${req.body.comments}', '${req.body.proglang}', '${req.body.subtech}');`
+    var sql = `INSERT INTO entriespool (user_id, timestamp, date, hours, comments, proglang) VALUES ('${req.body.user_id}', '${timestamp}', '${req.body.date}', '${req.body.hours}', '${req.body.comments}', '${req.body.proglang}');`
     console.log(sql)
     client.query(sql, (err, res) => {
     })
