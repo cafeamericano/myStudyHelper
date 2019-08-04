@@ -118,8 +118,8 @@ app.get('/entryByID/:id', function (req, res) {
         } else {
             let items = [];
             console.log(result)
-            for (i = 0; i < result.length; i++) {
-                items.push(result[i])
+            for (let row of res.rows) {
+                items.push(row)
             }
             res.send(items)
         }
