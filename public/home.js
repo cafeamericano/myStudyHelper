@@ -128,7 +128,7 @@ function prepareRecordForEdit(dbID) {
     }).then(function (response) {
         console.log(response)
         $('#recordDatabaseID').val(response[0].id)
-        $('#dateEdit').val(response[0].date)
+        $('#dateEdit').val(moment(response[0].date).format('MM/DD/YYYY'))
         $('#hoursEdit').val(response[0].hours)
         $('#commentsEdit').val(response[0].comments)
         $('#proglangEdit').val(response[0].proglang)
