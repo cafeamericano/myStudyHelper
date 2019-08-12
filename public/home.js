@@ -187,13 +187,15 @@ function makeLineChart(userID) {
         };
 
         let last60DaysArray = pullLast60Days()
-        let recordCount = response.length
         let comprehensiveLastSixtyDaysArray = []
         for (i = 0; i < last60DaysArray.length; i++) {
-            let valueToInsert = 0;
-            for (j = 0; j < recordCount; j++) {
+            let valueToInsert;
+            for (j = 0; j < response.length; j++) {
                 if (last60DaysArray[i] === response[j].date) {
-                    valueToInsert += response[j].hours
+                    console.log(response[j].hours)
+                    valueToInsert = response[j].hours
+                } else {
+                    valueToInsert = 0
                 }
             }
             console.log(valueToInsert)
