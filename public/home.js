@@ -166,7 +166,7 @@ function makeLineChart(userID) {
     }).then(function (response) {
         let hours = []
         let dates = []
-        for (i = 0; i < response.length; i++) {
+        for (i = response.length; i >= 0; i--) {
             if (response[i].hours <= 12) { //Limit graphed items to single-day sessions
                 hours.push(response[i].hours)
                 dates.push(moment(response[i].date).add(12, 'hours').format('YYYY-MM-DD'))
@@ -179,7 +179,7 @@ function makeLineChart(userID) {
         //Create the new chart
         var ctx = document.getElementById('myChart').getContext('2d');
         new Chart(ctx, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: dates,
                 datasets: [{
