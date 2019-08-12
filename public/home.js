@@ -152,8 +152,24 @@ function deleteRecordFromDatabase(dbID) {
     })
 }
 
+//Pull last 60 days into an array
+function pullLast60Days() {
+    var startPoint = moment().subtract(2, 'months')
+    var endPoint = moment().startOf('startPoint');
+
+    var datesArr = [];
+
+    while (startPoint <= endPoint) {
+        datesArr.push(startPoint.format('YYYY-MM-DD'));
+        startPoint = startPoint.clone().add(1, 'd');
+    }
+
+    return datesArr
+}
+
 //Line chart tab
 function makeLineChart(userID) {
+
     $('#hoursByLanguage').removeClass('active')
     $('#hoursByTotal').removeClass('active')
     $('#hoursByTime').addClass('active')
@@ -173,6 +189,21 @@ function makeLineChart(userID) {
             }
         };
 
+        let last60DaysArray = pullLast60Days()
+        let recordCount = response.length
+        let compValsArr = []
+        for (i = 0; i < last60DaysArray.length; i++) {
+            let valueToInsert = 0;
+            for (j = 0; j < recordCount; j++) {
+                if (last60DaysArray[i] === response[j].date) {
+                    valueToInsert += 1
+                }
+            }
+            compValsArr.push(valueToInsert)
+        }
+        console.log(last60DaysArray)
+        console.log(compValsArr)
+
         //Prepare the modal for new data
         $('#statsModalBody').append(`<canvas id="myChart"></canvas>`)
 
@@ -181,7 +212,7 @@ function makeLineChart(userID) {
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: dates.reverse(),
+                labels: last60DaysArray,
                 datasets: [{
                     label: 'Hours',
                     data: hours.reverse(),
