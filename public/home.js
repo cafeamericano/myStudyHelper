@@ -181,13 +181,11 @@ function makeLineChart(userID) {
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: dates,
+                labels: dates.reverse(),
                 datasets: [{
                     label: 'Hours',
-                    data: hours,
-                    backgroundColor: [
-                        'rgba(158, 88, 65, 0.5)'
-                    ],
+                    data: hours.reverse(),
+                    backgroundColor: 'rgba(158, 88, 65, 0.5)'
                 }]
             },
             options: {
