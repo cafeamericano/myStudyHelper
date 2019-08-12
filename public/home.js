@@ -40,6 +40,7 @@ logoutButton.addEventListener('click', e => {
 //Edit record button clicked
 $(document).on('click', '#edit_button', function () {
     let dbID = $(this).attr('data-dbID')
+    console.log(dbID)
     prepareRecordForEdit(dbID)
 })
 
@@ -74,10 +75,12 @@ $(document).on('click', '#hoursByTotal', function () {
 //Pull in the entries from database, make cards
 function pullEntries(userID) {
     let queryURL = `/allentries/${userID}`
+    console.log(queryURL)
     $.ajax({
         url: queryURL,
         method: "GET",
     }).then(function (response) {
+        console.log(response)
 
         //Draw the cards
         for (var i = 0; i < response.length; i++) {
@@ -149,24 +152,8 @@ function deleteRecordFromDatabase(dbID) {
     })
 }
 
-//Pull last 60 days into an array
-function pullLast60Days() {
-    var startPoint = moment().subtract(2, 'months')
-    var endPoint = moment().startOf('startPoint');
-
-    var datesArr = [];
-
-    while (startPoint <= endPoint) {
-        datesArr.push(startPoint.format('YYYY-MM-DD'));
-        startPoint = startPoint.clone().add(1, 'd');
-    }
-
-    return datesArr
-}
-
 //Line chart tab
 function makeLineChart(userID) {
-
     $('#hoursByLanguage').removeClass('active')
     $('#hoursByTotal').removeClass('active')
     $('#hoursByTime').addClass('active')
@@ -177,23 +164,14 @@ function makeLineChart(userID) {
         url: queryURL,
         method: "GET",
     }).then(function (response) {
-        let last60DaysArray = pullLast60Days()
-        let xArr = []
-        for (i = 0; i < last60DaysArray.length; i++) {
-            let valueToInsert;
-            for (j = 0; j < response.length; j++) {
-                let formattedDate = moment(response[j].date).add(12, 'hours').format('YYYY-MM-DD') // Push from midnight to noon - incorrectly reports previous day at midnight
-                if (last60DaysArray[i] === formattedDate) {
-                    console.log(response[j].hours)
-                    valueToInsert = response[j].hours
-                } else {
-                    valueToInsert = 0
-                }
+        let hours = []
+        let dates = []
+        for (var i = 0; i < response.length; i++) {
+            if (response[i].hours <= 12) { //Limit graphed items to single-day sessions
+                hours.push(response[i].hours)
+                dates.push(moment(response[i].date).add(12, 'hours').format('YYYY-MM-DD'))
             }
-            console.log(valueToInsert)
-            xArr.push(valueToInsert)
-        }
-        console.log(xArr)
+        };
 
         //Prepare the modal for new data
         $('#statsModalBody').append(`<canvas id="myChart"></canvas>`)
@@ -203,10 +181,10 @@ function makeLineChart(userID) {
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: last60DaysArray,
+                labels: dates.reverse(),
                 datasets: [{
                     label: 'Hours',
-                    data: xArr,
+                    data: hours.reverse(),
                     backgroundColor: 'rgba(158, 88, 65, 0.5)'
                 }]
             },
