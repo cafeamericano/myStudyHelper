@@ -177,20 +177,13 @@ function makeLineChart(userID) {
         url: queryURL,
         method: "GET",
     }).then(function (response) {
-        let hours = []
-        let dates = []
-        for (var i = 0; i < response.length; i++) {
-            if (response[i].hours <= 12) { //Limit graphed items to single-day sessions
-                hours.push(response[i].hours)
-                dates.push(moment(response[i].date).add(12, 'hours').format('YYYY-MM-DD'))
-            }
-        };
-
         let last60DaysArray = pullLast60Days()
         let comprehensiveLastSixtyDaysArray = []
         for (i = 0; i < last60DaysArray.length; i++) {
             let valueToInsert;
             for (j = 0; j < response.length; j++) {
+                console.log(last60DaysArray[i])
+                console.log(response[j].date)
                 if (last60DaysArray[i] === response[j].date) {
                     console.log(response[j].hours)
                     valueToInsert = response[j].hours
