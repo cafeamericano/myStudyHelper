@@ -40,7 +40,6 @@ logoutButton.addEventListener('click', e => {
 //Edit record button clicked
 $(document).on('click', '#edit_button', function () {
     let dbID = $(this).attr('data-dbID')
-    console.log(dbID)
     prepareRecordForEdit(dbID)
 })
 
@@ -75,12 +74,10 @@ $(document).on('click', '#hoursByTotal', function () {
 //Pull in the entries from database, make cards
 function pullEntries(userID) {
     let queryURL = `/allentries/${userID}`
-    console.log(queryURL)
     $.ajax({
         url: queryURL,
         method: "GET",
     }).then(function (response) {
-        console.log(response)
 
         //Draw the cards
         for (var i = 0; i < response.length; i++) {
@@ -215,7 +212,7 @@ function makeLineChart(userID) {
                 labels: last60DaysArray,
                 datasets: [{
                     label: 'Hours',
-                    data: hours.reverse(),
+                    data: comprehensiveLastSixtyDaysArray,
                     backgroundColor: 'rgba(158, 88, 65, 0.5)'
                 }]
             },
