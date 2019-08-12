@@ -178,7 +178,7 @@ function makeLineChart(userID) {
         method: "GET",
     }).then(function (response) {
         let last60DaysArray = pullLast60Days()
-        let comprehensiveLastSixtyDaysArray = []
+        let xArr = []
         for (i = 0; i < last60DaysArray.length; i++) {
             let valueToInsert;
             for (j = 0; j < response.length; j++) {
@@ -191,10 +191,9 @@ function makeLineChart(userID) {
                 }
             }
             console.log(valueToInsert)
-            comprehensiveLastSixtyDaysArray.push(valueToInsert)
+            xArr.push(valueToInsert)
         }
-        console.log(last60DaysArray)
-        console.log(comprehensiveLastSixtyDaysArray)
+        console.log(xArr)
 
         //Prepare the modal for new data
         $('#statsModalBody').append(`<canvas id="myChart"></canvas>`)
@@ -207,7 +206,7 @@ function makeLineChart(userID) {
                 labels: last60DaysArray,
                 datasets: [{
                     label: 'Hours',
-                    data: comprehensiveLastSixtyDaysArray,
+                    data: xArr,
                     backgroundColor: 'rgba(158, 88, 65, 0.5)'
                 }]
             },
