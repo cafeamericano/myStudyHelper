@@ -184,7 +184,7 @@ function makeLineChart(userID) {
             for (j = 0; j < response.length; j++) {
                 console.log(last60DaysArray[i])
                 console.log(response[j].date)
-                if (last60DaysArray[i] === response[j].date) {
+                if (last60DaysArray[i] === moment(response[j].date).add(12, 'hours').format('YYYY-MM-DD')) {
                     console.log(response[j].hours)
                     valueToInsert = response[j].hours
                 } else {
