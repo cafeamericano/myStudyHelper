@@ -191,7 +191,7 @@ function makeLineChart(userID) {
 
         let last60DaysArray = pullLast60Days()
         let recordCount = response.length
-        let compValsArr = []
+        let comprehensiveLastSixtyDaysArray = []
         for (i = 0; i < last60DaysArray.length; i++) {
             let valueToInsert = 0;
             for (j = 0; j < recordCount; j++) {
@@ -199,10 +199,10 @@ function makeLineChart(userID) {
                     valueToInsert += 1
                 }
             }
-            compValsArr.push(valueToInsert)
+            comprehensiveLastSixtyDaysArray.push(valueToInsert)
         }
         console.log(last60DaysArray)
-        console.log(compValsArr)
+        console.log(comprehensiveLastSixtyDaysArray)
 
         //Prepare the modal for new data
         $('#statsModalBody').append(`<canvas id="myChart"></canvas>`)
