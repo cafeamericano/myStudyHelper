@@ -183,8 +183,9 @@ function makeLineChart(userID) {
             let valueToInsert;
             for (j = 0; j < response.length; j++) {
                 console.log(last60DaysArray[i])
-                console.log(response[j].date)
-                if (last60DaysArray[i] === moment(response[j].date).add(12, 'hours').format('YYYY-MM-DD')) {
+                let formattedDate = moment(response[j].date).add(12, 'hours').format('YYYY-MM-DD') // Push from midnight to noon - incorrectly reports previous day at midnight
+                console.log(formattedDate)
+                if (last60DaysArray[i] === formattedDate) {
                     console.log(response[j].hours)
                     valueToInsert = response[j].hours
                 } else {
