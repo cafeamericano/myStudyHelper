@@ -84,7 +84,7 @@ function pullEntries(userID) {
 
         //Draw the cards
         for (var i = 0; i < response.length; i++) {
-            let card = $(`<div class='card m-3'></div>`)
+            let card = $(`<div class='card m-3 animated fadeInUpBig'></div>`)
 
             let cardHeader = $(`<div class='card-header'></div>`)
             let cardHeaderRow = $(`<div class='row'></div>`)
